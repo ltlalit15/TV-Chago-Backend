@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "dashbaord\r reports                    \r role and permission \r create-checklist \r fill-checklist\r language",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,6 +1,5 @@
 import OrderModel from "../Models/OrderModel.js";
 import asyncHandler from "express-async-handler";
-import sendEmail from "../Middewares/sendEmail.js";
 
 // ➤ Get all orders
 export const getallorders = asyncHandler(async (req, res) => {
