@@ -153,3 +153,29 @@ export const deleteorders = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+export const deleteBulkOrders = asyncHandler(async (req, res) => {
+  const { day } = req.body;
+
+  if (!day) {
+    return res.status(400).json({ success: false, message: "Day is required" });
+  }
+
+  const services = await OrderModel.find({ orderStatus: "1" });
+  let updatedCount = 0;
+
+  for (const service of services) {
+    const createdAt = new Date(service.createdAt);
+    const expireAt = new Date(createdAt);
+    expireAt.setDate(expireAt.getDate() + parseInt(day));
+
+    await OrderModel.findByIdAndUpdate(service._id, { expireAt });
+    updatedCount++;
+  }
+
+  res.status(200).json({
+    success: true,
+    message: `${updatedCount} records updated with expireAt date.`,
+  });
+});

@@ -26,8 +26,11 @@ const orderSchema = new mongoose.Schema(
       email: { type: String },
       phone: { type: String },
     },
+    expireAt: Date,
+
   },
   { timestamps: true }
 );
+orderSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
 export default mongoose.model("Order", orderSchema);

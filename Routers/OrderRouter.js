@@ -6,7 +6,8 @@ import {
   deleteorders,
   updateorders,
   updateordersStatus,
-  sendMails
+  sendMails,
+  deleteBulkOrders
 } from "../Controllers/OrderController.js";
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.put("/orders/:id", updateorders);
 router.patch("/updateordersstatus/:id", updateordersStatus);
 router.patch("/updateenquiryStatus", sendMails);
 router.delete("/orders/:id", deleteorders);
+router.delete("/deleteBulkOrders", deleteBulkOrders);
 
 export default router;
