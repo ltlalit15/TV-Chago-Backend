@@ -1,55 +1,51 @@
-import ServiceModel from "../Models/sendMailModel.js";
+import EmailLogModel from "../Models/sendMailModel.js";
 import asyncHandler from "express-async-handler";
 
-// ➤ Get all services
+// ➤ Get all email logs
 export const getAllServices = asyncHandler(async (req, res) => {
   try {
-    const services = await ServiceModel.find();
-    res.status(200).json(services);
+    const logs = await EmailLogModel.find().sort({ createdAt: -1 });
+    res.status(200).json(logs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// ➤ Add new service
+// ➤ Add new email log
 export const addService = asyncHandler(async (req, res) => {
   try {
-    const { serviceName, price, duration } = req.body;
+    const { email, message, orderId, status, date } = req.body;
 
-    if (!serviceName || !price || !duration) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required",
-      });
-    }
-
-    const newService = await ServiceModel.create({
-      serviceName,
-      price,
-      duration,
+    const newLog = await EmailLogModel.create({
+      email,
+      message,
+      orderId,
+      status,
+      date,
     });
 
     res.status(201).json({
       success: true,
-      message: "Service added successfully",
-      data: newService,
+      message: "Email log added successfully",
+      data: newLog,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// ➤ Update service
+// ➤ Update email log
 export const updateService = asyncHandler(async (req, res) => {
   try {
-    const updated = await ServiceModel.findByIdAndUpdate(
+    const updated = await EmailLogModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
+
     res.status(200).json({
       success: true,
-      message: "Service updated successfully",
+      message: "Email log updated successfully",
       data: updated,
     });
   } catch (error) {
@@ -57,13 +53,13 @@ export const updateService = asyncHandler(async (req, res) => {
   }
 });
 
-// ➤ Delete service
+// ➤ Delete email log
 export const deleteService = asyncHandler(async (req, res) => {
   try {
-    const deleted = await ServiceModel.findByIdAndDelete(req.params.id);
+    const deleted = await EmailLogModel.findByIdAndDelete(req.params.id);
     res.status(200).json({
       success: true,
-      message: "Service deleted successfully",
+      message: "Email log deleted successfully",
       data: deleted,
     });
   } catch (error) {
