@@ -182,39 +182,37 @@ export const deleteBulkOrders = asyncHandler(async (req, res) => {
 
 export const notification = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
-    const { notification } = req.body;
+    const { notification, id} = req.body;
 
-    if (!notification) {
+    if (!notification || !Array.isArray(id) || id.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "Notification is required",
+        message: "Notification and valid IDs are required",
       });
     }
 
-    const updatedOrder = await OrderModel.findByIdAndUpdate(
-      id,
-      { notification },
-      { new: true }
+    const result = await OrderModel.updateMany(
+      { _id: { $in: id } },
+      { $set: { notification } }
     );
 
-    if (!updatedOrder) {
+    if (result.modifiedCount === 0) {
       return res.status(404).json({
         success: false,
-        message: "Order not found",
+        message: "No matching orders found to update",
       });
     }
 
     res.status(200).json({
-      data: updatedOrder,
-      message: "Notification updated successfully",
+      data: result,
+      message: "Notifications updated successfully",
       success: true,
     });
   } catch (error) {
     res.status(500).json({
       error: error.message,
-      message: "Notification not updated",
+      message: "Notifications not updated",
       success: false,
     });
   }
-}); 
+});

@@ -19,7 +19,7 @@ router.post("/orders", addorders);
 router.put("/orders/:id", updateorders);
 router.patch("/updateordersstatus/:id", updateordersStatus);
 router.patch("/updateenquiryStatus", sendMails);
-router.patch("/notification/:id", notification);
+router.patch("/notification", notification);
 router.delete("/orders/:id", deleteorders);
 router.delete("/deleteBulkOrders", deleteBulkOrders);
 
