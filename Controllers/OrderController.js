@@ -179,3 +179,42 @@ export const deleteBulkOrders = asyncHandler(async (req, res) => {
     message: `${updatedCount} records updated with expireAt date.`,
   });
 });
+
+export const notification = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { notification } = req.body;
+
+    if (!notification) {
+      return res.status(400).json({
+        success: false,
+        message: "Notification is required",
+      });
+    }
+
+    const updatedOrder = await OrderModel.findByIdAndUpdate(
+      id,
+      { notification },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    res.status(200).json({
+      data: updatedOrder,
+      message: "Notification updated successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      message: "Notification not updated",
+      success: false,
+    });
+  }
+}); 

@@ -20,6 +20,7 @@ const orderSchema = new mongoose.Schema(
     paymentMethod: { type: String },
     bankName: { type: String },
     orderStatus: { type: String,default:0 },
+    notification: { type: String,default:0 },
     enquiryStatus: { type: String },
     customerInfo: {
       fullName: { type: String },
