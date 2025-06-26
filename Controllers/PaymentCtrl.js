@@ -1,11 +1,25 @@
 // controllers/paymentController.js
 import Payment from "../Models/PaymentModel.js";
+import Service from "../Models/ServiceModel.js"; // Import your Service model
 import asyncHandler from "express-async-handler";
 
-// Get all payments
 export const getAllPayments = asyncHandler(async (req, res) => {
+  // Step 1: Get all payments
   const payments = await Payment.find();
-  res.status(200).json(payments);
+
+  // Step 2: For each payment, populate its services
+  const enrichedPayments = await Promise.all(
+    payments.map(async (payment) => {
+      const services = await Service.find({ _id: { $in: payment.serviceIds } });
+
+      return {
+        ...payment.toObject(), // Convert mongoose doc to plain object
+        services, // attach actual service objects
+      };
+    })
+  );
+
+  res.status(200).json(enrichedPayments);
 });
 
 // Add new payment
@@ -14,14 +28,15 @@ export const addPayment = asyncHandler(async (req, res) => {
     paymentId,
     intent,
     links,
-    payers,
+    payer,
     purchase_units,
     status,
     update_time,
     create_time,
+    serviceIds 
   } = req.body;
 
-  if (!paymentId || !intent || !status || !update_time || !create_time) {
+  if (!paymentId || !intent || !status || !update_time || !create_time || !serviceIds) {
     return res.status(400).json({
       success: false,
       message: "Missing required fields",
@@ -32,11 +47,12 @@ export const addPayment = asyncHandler(async (req, res) => {
     paymentId,
     intent,
     links,
-    payers,
+    payer,
     purchase_units,
     status,
     update_time,
     create_time,
+    serviceIds
   });
 
   res.status(201).json({

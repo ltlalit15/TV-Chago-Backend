@@ -7,6 +7,7 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    serviceIds: [],
     intent: {
       type: String,
       required: true,
@@ -15,7 +16,7 @@ const paymentSchema = new mongoose.Schema(
       type: [Object], // Define schema if needed
       default: [],
     },
-    payers: {
+    payer: {
       type: [Object], // Define schema if needed
       default: [],
     },
