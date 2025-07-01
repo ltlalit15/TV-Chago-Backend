@@ -23,36 +23,54 @@ export const getAllPayments = asyncHandler(async (req, res) => {
 });
 
 // Add new payment
+// export const addPayment = asyncHandler(async (req, res) => {
+//   const {
+//     paymentId,
+//     intent,
+//     links,
+//     payer,
+//     purchase_units,
+//     status,
+//     update_time,
+//     create_time,
+//     serviceIds 
+//   } = req.body;
+
+//   if (!paymentId || !intent || !status || !update_time || !create_time || !serviceIds) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "Missing required fields",
+//     });
+//   }
+
+//   const newPayment = await Payment.create({
+//     paymentId,
+//     intent,
+//     links,
+//     payer,
+//     purchase_units,
+//     status,
+//     update_time,
+//     create_time,
+//     serviceIds
+//   });
+
+//   res.status(201).json({
+//     success: true,
+//     message: "Payment added successfully",
+//     data: newPayment,
+//   });
+// });
+
 export const addPayment = asyncHandler(async (req, res) => {
   const {
-    paymentId,
-    intent,
-    links,
-    payer,
-    purchase_units,
-    status,
-    update_time,
-    create_time,
-    serviceIds 
+    details
   } = req.body;
 
-  if (!paymentId || !intent || !status || !update_time || !create_time || !serviceIds) {
-    return res.status(400).json({
-      success: false,
-      message: "Missing required fields",
-    });
-  }
+
 
   const newPayment = await Payment.create({
-    paymentId,
-    intent,
-    links,
-    payer,
-    purchase_units,
-    status,
-    update_time,
-    create_time,
-    serviceIds
+    details
   });
 
   res.status(201).json({
