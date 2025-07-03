@@ -5,7 +5,7 @@ import {
   getallordersName,
   deleteorders,
   updateorders,
-  updateordersStatus,
+  // updateordersStatus,
   sendMails,
   deleteBulkOrders,
   notification
@@ -17,7 +17,7 @@ router.get("/orders", getallorders);
 router.get("/order", getallordersName);
 router.post("/orders", addorders);
 router.put("/orders/:id", updateorders);
-router.patch("/updateordersstatus/:id", updateordersStatus);
+// router.patch("/updateordersstatus/:id", updateordersStatus);
 router.patch("/updateenquiryStatus", sendMails);
 router.patch("/notification", notification);
 router.delete("/orders/:id", deleteorders);

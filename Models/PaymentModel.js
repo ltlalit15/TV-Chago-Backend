@@ -5,6 +5,14 @@ const paymentSchema = new mongoose.Schema(
   {
 
     details: [],
+    services: {},
+    notification: { type: String, default: 0 },
+
+    total: { type: Number },
+    orderStatus: {
+      type: String,
+      default: 0
+    }
 
   },
   { timestamps: true }

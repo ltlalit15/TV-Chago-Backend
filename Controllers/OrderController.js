@@ -1,4 +1,5 @@
 import OrderModel from "../Models/OrderModel.js";
+import PaymentModel from "../Models/PaymentModel.js";
 import asyncHandler from "express-async-handler";
 
 // ➤ Get all orders
@@ -55,43 +56,43 @@ export const updateorders = asyncHandler(async (req, res) => {
   }
 });
 
-export const updateordersStatus = asyncHandler(async (req, res) => {
-  try {
-    const { orderStatus } = req.body;
+// export const updateordersStatus = asyncHandler(async (req, res) => {
+//   try {
+//     const { orderStatus } = req.body;
 
-    if (!orderStatus) {
-      return res.status(400).json({
-        success: false,
-        message: "orderStatus is required",
-      });
-    }
+//     if (!orderStatus) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "orderStatus is required",
+//       });
+//     }
 
-    const data = await OrderModel.findByIdAndUpdate(
-      req.params.id,
-      { orderStatus }, // only update status field
-      { new: true }
-    );
+//     const data = await OrderModel.findByIdAndUpdate(
+//       req.params.id,
+//       { orderStatus }, // only update status field
+//       { new: true }
+//     );
 
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: "Order not found",
-      });
-    }
+//     if (!data) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Order not found",
+//       });
+//     }
 
-    res.status(200).json({
-      data,
-      message: "Order status updated successfully",
-      success: true,
-    });
-  } catch (error) {
-    res.status(500).json({
-      error: error.message,
-      message: "Order status not updated",
-      success: false,
-    });
-  }
-});
+//     res.status(200).json({
+//       data,
+//       message: "Order status updated successfully",
+//       success: true,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       error: error.message,
+//       message: "Order status not updated",
+//       success: false,
+//     });
+//   }
+// });
 
 export const sendMails = asyncHandler(async (req, res) => {
   try {
@@ -191,7 +192,7 @@ export const notification = asyncHandler(async (req, res) => {
       });
     }
 
-    const result = await OrderModel.updateMany(
+    const result = await PaymentModel.updateMany(
       { _id: { $in: id } },
       { $set: { notification } }
     );
