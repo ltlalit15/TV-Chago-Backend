@@ -15,6 +15,7 @@ export const getAllServices = asyncHandler(async (req, res) => {
 export const addService = asyncHandler(async (req, res) => {
   try {
     const { email, message, orderId, status, date } = req.body;
+    const img = req.uploadedImageUrl
 
     const newLog = await EmailLogModel.create({
       email,
@@ -22,8 +23,8 @@ export const addService = asyncHandler(async (req, res) => {
       orderId,
       status,
       date,
+      image: img
     });
-
     res.status(201).json({
       success: true,
       message: "Email log added successfully",
