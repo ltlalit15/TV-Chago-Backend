@@ -8,6 +8,9 @@ const EmailLogSchema = new mongoose.Schema(
     message: {
       type: String,
     },
+    image: {
+      type: String,
+    },
     orderId: {
       type: String,
     },

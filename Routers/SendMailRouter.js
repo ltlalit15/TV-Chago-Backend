@@ -15,7 +15,7 @@ import { uploadSingleImageToCloudinary } from "../Middleware.js";
 const router = express.Router();
 
 router.get("/sendmail", getAllServices);                           // Get all mail logs
-router.post("/sendmail", uploadSingleImageToCloudinary, upload.single("image"), addService);     // Add new email log with image
+router.post("/sendmail", upload.single("image"), uploadSingleImageToCloudinary ,addService);     // Add new email log with image
 router.put("/sendmail/:id", updateService);                       // Update mail record
 router.delete("/sendmail/:id", deleteService);                    // Delete mail record
 
