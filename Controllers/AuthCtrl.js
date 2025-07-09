@@ -38,12 +38,10 @@ export const logins = asyncHandler(async (req, res) => {
     });
 });
 
-
-
 export const profile = asyncHandler(async (req, res) => {
 
     const { id } = req.params;
-    const { firstName, lastName, phone, address, password } = req.body;
+    const { firstName, lastName, phone, address, password , email  } = req.body;
 
     const user = await Auth.findById(id);
     if (!user) {
@@ -55,6 +53,7 @@ export const profile = asyncHandler(async (req, res) => {
     if (lastName) user.lastName = lastName;
     if (phone) user.phone = phone;
     if (address) user.address = address;
+    if (email) user.email = email;
 
     // Password update if provided
     if (password) {
