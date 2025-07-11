@@ -125,7 +125,7 @@ export const updatePaymentStatus = asyncHandler(async (req, res) => {
       { orderStatus }, // only update status field
       { new: true }
     );
-
+console.log("data",data);
     if (!data) {
       return res.status(404).json({
         success: false,

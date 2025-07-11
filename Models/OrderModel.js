@@ -26,6 +26,7 @@ const orderSchema = new mongoose.Schema(
       fullName: { type: String },
       email: { type: String },
       phone: { type: String },
+      bankHolderName :{ type: String },
     },
     expireAt: Date,
 
